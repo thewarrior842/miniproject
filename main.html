@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        form {
+            width: 300px;
+            margin: auto;
+        }
+
+        input,
+        button {
+            display: block;
+            width: 100%;
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+
+        .time {
+            text-align: left;
+            margin-bottom: 10px;
+            margin: 15px 0;
+
+        }
+
+        .timeop {
+            margin-bottom: 8px;
+        }
+
+        .timeop input[type="radio"] {
+            display: inline-block;
+            width: auto;
+            margin-right: 8px;
+        }
+
+        .timeop label {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+    <h2>LRUC Room Booking System</h2>
+    <form action="data.php" method="POST">
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="name" required>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+
+        <label for="date">Select Date:</label>
+        <input type="date" id="date" name="date" required>
+        <br>
+        <div class="time">
+            <label for="time">Select Time: </label><br>
+            <div class="timeop">
+                <input type="radio" name="time" id="9:20 AM to 10:15 AM" value="9:20 AM to 10:15 AM">
+                <label for="9:20 AM to 10:15 AM">1st Period</label>
+            </div>
+            <div class="timeop">
+                <input type="radio" name="time" id="10:15 AM to 11:10 AM" value="10:15 AM to 11:10 AM">
+                <label for="10:15 AM to 11:10 AM">2nd Period </label>
+            </div>
+            <div class="timeop">
+                <input type="radio" name="time" id="11:20 AM to 12:15 PM" value="11:20 AM to 12:15 PM">
+                <label for="11:20 AM to 12:15 PM">3rd Period </label>
+            </div>
+            <div class="timeop">
+                <input type="radio" name="time" id="1:10 PM to 2:05 PM" value="1:10 PM to 2:05 PM">
+                <label for="1:10 PM to 2:05 PM">4th Period </label>
+            </div>
+            <div class="timeop">
+                <input type="radio" name="time" id="2:05 PM to 3:00 PM" value="2:05 PM to 3:00 PM">
+                <label for="2:05 PM to 3:00 PM">5th Period </label>
+            </div>
+            <div class="timeop">
+                <input type="radio" name="time" id="3:05 PM to 4:00 PM" value="3:05 PM to 4:00 PM">
+                <label for="3:05 PM to 4:00 PM">6th Period </label>
+            </div>
+        </div>
+
+        <button type="submit" onclick="btn()">Book Now</button>
+    </form>
+    <script>
+        alert('Please fill the form');
+        function btn() {
+            alert('Thanks for booking.....');
+        }
+
+    </script>
+</body>
+
+</html>

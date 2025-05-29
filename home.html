@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Viewing & Booking</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        h1 {
+            color: #0066cc;
+            margin-bottom: 30px;
+        }
+
+        .section {
+            background-color: #fff;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+
+        .section:hover {
+            transform: translateY(-5px);
+        }
+
+        .section h2 {
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        .section p {
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        a button {
+            padding: 12px 24px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            background-color: #007bff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        a button:hover {
+            background-color: #0056b3;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 10px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            a button {
+                width: 100%;
+                font-size: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>Welcome to Our Viewing & Booking Page</h1>
+
+        <div class="section">
+            <h2>View Available Listings</h2>
+            <p>Explore our available properties and experiences.</p>
+            <a href="view.php"><button onclick="alert('Redirecting to viewing page')">View Listings</button></a>
+        </div>
+
+        <div class="section">
+            <h2>Book Your Selection</h2>
+            <p>Secure your booking now</p>
+            <a href="main.html"><button onclick="alert('Redirecting to booking page')">Book Now</button></a>
+        </div>
+    </div>
+</body>
+
+</html>
