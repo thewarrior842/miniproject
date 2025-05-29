@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,93 +8,355 @@
         body {
             font-family: Arial, sans-serif;
             text-align: center;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 25px;
         }
 
         form {
-            width: 300px;
+            width: 100%;
             margin: auto;
         }
 
-        input,
-        button {
+        label {
             display: block;
+            text-align: left;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #34495e;
+        }
+
+        input, button, select {
             width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        input:focus {
+            border-color: #3498db;
+            outline: none;
+            box-shadow: 0 0 5px rgba(52,152,219,0.5);
+        }
+
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        .time-section {
+            text-align: left;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 5px;
+        }
+
+        .time-option {
             margin-bottom: 10px;
             padding: 8px;
+            background-color: white;
+            border-radius: 4px;
+            border: 1px solid #eee;
         }
 
-        .time {
-            text-align: left;
-            margin-bottom: 10px;
-            margin: 15px 0;
-
-        }
-
-        .timeop {
-            margin-bottom: 8px;
-        }
-
-        .timeop input[type="radio"] {
-            display: inline-block;
+        .time-option input[type="radio"],
+        .time-option input[type="checkbox"] {
             width: auto;
-            margin-right: 8px;
+            margin-right: 10px;
         }
 
-        .timeop label {
+        .time-option label {
             display: inline-block;
+            font-weight: normal;
+            margin-bottom: 0;
+        }
+
+        .booking-type {
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        #selectedTimes {
+            margin: 15px 0;
+            padding: 15px;
+            background-color: #e8f4fc;
+            border-radius: 5px;
+            text-align: left;
+            display: none;
+            border: 1px solid #d6eaf8;
+        }
+
+        .error-message {
+            color: #e74c3c;
+            font-size: 14px;
+            margin-top: -10px;
+            margin-bottom: 15px;
+            text-align: left;
+            display: none;
+        }
+
+        .success-message {
+            color: #27ae60;
+            font-weight: bold;
+            margin: 20px 0;
         }
     </style>
 </head>
-
 <body>
-    <h2>LRUC Room Booking System</h2>
-    <form action="data.php" method="POST">
-        <label for="name">Name:</label>
-        <input type="text" id="name" name="name" required>
+    <div class="container">
+        <h2>LRUC Room Booking System</h2>
+        
+        <form id="bookingForm" action="data.php" method="POST">
+            <div>
+                <label for="name">Full Name:</label>
+                <input type="text" id="name" name="name" required>
+                <div id="nameError" class="error-message"></div>
+            </div>
 
-        <label for="email">Email:</label>
-        <input type="email" id="email" name="email" required>
+            <div>
+                <label for="email">Email Address:</label>
+                <input type="email" id="email" name="email" required>
+                <div id="emailError" class="error-message"></div>
+            </div>
 
-        <label for="date">Select Date:</label>
-        <input type="date" id="date" name="date" required>
-        <br>
-        <div class="time">
-            <label for="time">Select Time: </label><br>
-            <div class="timeop">
-                <input type="radio" name="time" id="9:20 AM to 10:15 AM" value="9:20 AM to 10:15 AM">
-                <label for="9:20 AM to 10:15 AM">1st Period</label>
+            <div>
+                <label for="date">Booking Date:</label>
+                <input type="date" id="date" name="date" required min="<?php echo date('Y-m-d'); ?>">
+                <div id="dateError" class="error-message"></div>
             </div>
-            <div class="timeop">
-                <input type="radio" name="time" id="10:15 AM to 11:10 AM" value="10:15 AM to 11:10 AM">
-                <label for="10:15 AM to 11:10 AM">2nd Period </label>
-            </div>
-            <div class="timeop">
-                <input type="radio" name="time" id="11:20 AM to 12:15 PM" value="11:20 AM to 12:15 PM">
-                <label for="11:20 AM to 12:15 PM">3rd Period </label>
-            </div>
-            <div class="timeop">
-                <input type="radio" name="time" id="1:10 PM to 2:05 PM" value="1:10 PM to 2:05 PM">
-                <label for="1:10 PM to 2:05 PM">4th Period </label>
-            </div>
-            <div class="timeop">
-                <input type="radio" name="time" id="2:05 PM to 3:00 PM" value="2:05 PM to 3:00 PM">
-                <label for="2:05 PM to 3:00 PM">5th Period </label>
-            </div>
-            <div class="timeop">
-                <input type="radio" name="time" id="3:05 PM to 4:00 PM" value="3:05 PM to 4:00 PM">
-                <label for="3:05 PM to 4:00 PM">6th Period </label>
-            </div>
-        </div>
 
-        <button type="submit" onclick="btn()">Book Now</button>
-    </form>
+            <div class="booking-type">
+                <label>Booking Option:</label>
+                <div class="time-option">
+                    <input type="radio" name="booking_type" id="single_time" value="single" checked onclick="toggleTimeSelection()">
+                    <label for="single_time">Single Time Slot</label>
+                </div>
+                <div class="time-option">
+                    <input type="radio" name="booking_type" id="multiple_times" value="multiple" onclick="toggleTimeSelection()">
+                    <label for="multiple_times">Multiple Time Slots</label>
+                </div>
+                <div class="time-option">
+                    <input type="radio" name="booking_type" id="all_times" value="all" onclick="toggleTimeSelection()">
+                    <label for="all_times">All Time Slots</label>
+                </div>
+            </div>
+
+            <div class="time-section">
+                <label>Available Time Slots:</label>
+                <div class="time-option">
+                    <input type="radio" name="time_slot" id="slot1" value="9:20 AM to 10:15 AM">
+                    <label for="slot1">1st Period (9:20 AM - 10:15 AM)</label>
+                    <input type="checkbox" class="multi-slot" name="time_slots[]" value="9:20 AM to 10:15 AM" style="display:none">
+                </div>
+                <div class="time-option">
+                    <input type="radio" name="time_slot" id="slot2" value="10:15 AM to 11:10 AM">
+                    <label for="slot2">2nd Period (10:15 AM - 11:10 AM)</label>
+                    <input type="checkbox" class="multi-slot" name="time_slots[]" value="10:15 AM to 11:10 AM" style="display:none">
+                </div>
+                <div class="time-option">
+                    <input type="radio" name="time_slot" id="slot3" value="11:20 AM to 12:15 PM">
+                    <label for="slot3">3rd Period (11:20 AM - 12:15 PM)</label>
+                    <input type="checkbox" class="multi-slot" name="time_slots[]" value="11:20 AM to 12:15 PM" style="display:none">
+                </div>
+                <div class="time-option">
+                    <input type="radio" name="time_slot" id="slot4" value="1:10 PM to 2:05 PM">
+                    <label for="slot4">4th Period (1:10 PM - 2:05 PM)</label>
+                    <input type="checkbox" class="multi-slot" name="time_slots[]" value="1:10 PM to 2:05 PM" style="display:none">
+                </div>
+                <div class="time-option">
+                    <input type="radio" name="time_slot" id="slot5" value="2:05 PM to 3:00 PM">
+                    <label for="slot5">5th Period (2:05 PM - 3:00 PM)</label>
+                    <input type="checkbox" class="multi-slot" name="time_slots[]" value="2:05 PM to 3:00 PM" style="display:none">
+                </div>
+                <div class="time-option">
+                    <input type="radio" name="time_slot" id="slot6" value="3:05 PM to 4:00 PM">
+                    <label for="slot6">6th Period (3:05 PM - 4:00 PM)</label>
+                    <input type="checkbox" class="multi-slot" name="time_slots[]" value="3:05 PM to 4:00 PM" style="display:none">
+                </div>
+                <div id="timeError" class="error-message"></div>
+            </div>
+
+            <div id="selectedTimes"></div>
+
+            <button type="submit" id="submitBtn">Book Now</button>
+        </form>
+    </div>
+
     <script>
-        alert('Please fill the form');
-        function btn() {
-            alert('Thanks for booking.....');
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleTimeSelection();
+            setupFormValidation();
+        });
+
+        function toggleTimeSelection() {
+            const bookingType = document.querySelector('input[name="booking_type"]:checked').value;
+            const radioSlots = document.querySelectorAll('input[name="time_slot"]');
+            const checkboxes = document.querySelectorAll('.multi-slot');
+            const selectedTimesDiv = document.getElementById('selectedTimes');
+            
+            if (bookingType === 'single') {
+                radioSlots.forEach(radio => {
+                    radio.style.display = 'inline-block';
+                    radio.checked = false;
+                });
+                checkboxes.forEach(cb => {
+                    cb.style.display = 'none';
+                    cb.checked = false;
+                });
+                selectedTimesDiv.style.display = 'none';
+            } 
+            else if (bookingType === 'multiple') {
+                radioSlots.forEach(radio => {
+                    radio.style.display = 'none';
+                    radio.checked = false;
+                });
+                checkboxes.forEach(cb => {
+                    cb.style.display = 'inline-block';
+                    cb.checked = false;
+                });
+                selectedTimesDiv.style.display = 'block';
+                updateSelectedTimes();
+            } 
+            else if (bookingType === 'all') {
+                radioSlots.forEach(radio => {
+                    radio.style.display = 'none';
+                    radio.checked = false;
+                });
+                checkboxes.forEach(cb => {
+                    cb.style.display = 'none';
+                    cb.checked = true;
+                });
+                selectedTimesDiv.style.display = 'block';
+                updateSelectedTimes();
+            }
         }
 
+        function updateSelectedTimes() {
+            const bookingType = document.querySelector('input[name="booking_type"]:checked').value;
+            const checkboxes = document.querySelectorAll('.multi-slot:checked');
+            const selectedTimesDiv = document.getElementById('selectedTimes');
+            
+            if (bookingType === 'all') {
+                selectedTimesDiv.innerHTML = `
+                    <strong>All Time Slots Selected:</strong>
+                    <ul>
+                        <li>9:20 AM to 10:15 AM</li>
+                        <li>10:15 AM to 11:10 AM</li>
+                        <li>11:20 AM to 12:15 PM</li>
+                        <li>1:10 PM to 2:05 PM</li>
+                        <li>2:05 PM to 3:00 PM</li>
+                        <li>3:05 PM to 4:00 PM</li>
+                    </ul>
+                `;
+            } else if (checkboxes.length > 0) {
+                let html = '<strong>Selected Time Slots:</strong><ul>';
+                checkboxes.forEach(cb => {
+                    html += <li>${cb.value}</li>;
+                });
+                html += '</ul>';
+                selectedTimesDiv.innerHTML = html;
+            } else {
+                selectedTimesDiv.innerHTML = '<em>No time slots selected</em>';
+            }
+        }
+
+        function setupFormValidation() {
+            const form = document.getElementById('bookingForm');
+            const submitBtn = document.getElementById('submitBtn');
+            
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                let isValid = true;
+                
+                // Clear previous errors
+                document.querySelectorAll('.error-message').forEach(el => {
+                    el.style.display = 'none';
+                });
+                
+                // Validate name
+                const name = document.getElementById('name').value.trim();
+                if (name === '') {
+                    document.getElementById('nameError').textContent = 'Please enter your name';
+                    document.getElementById('nameError').style.display = 'block';
+                    isValid = false;
+                }
+                
+                // Validate email
+                const email = document.getElementById('email').value.trim();
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (email === '') {
+                    document.getElementById('emailError').textContent = 'Please enter your email';
+                    document.getElementById('emailError').style.display = 'block';
+                    isValid = false;
+                } else if (!emailRegex.test(email)) {
+                    document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                    document.getElementById('emailError').style.display = 'block';
+                    isValid = false;
+                }
+                
+                // Validate date
+                const date = document.getElementById('date').value;
+                const today = new Date().toISOString().split('T')[0];
+                if (date === '') {
+                    document.getElementById('dateError').textContent = 'Please select a date';
+                    document.getElementById('dateError').style.display = 'block';
+                    isValid = false;
+                } else if (date < today) {
+                    document.getElementById('dateError').textContent = 'Please select a future date';
+                    document.getElementById('dateError').style.display = 'block';
+                    isValid = false;
+                }
+                
+                // Validate time slots
+                const bookingType = document.querySelector('input[name="booking_type"]:checked').value;
+                const selectedSlots = document.querySelectorAll('.multi-slot:checked').length;
+                
+                if (bookingType === 'multiple' && selectedSlots === 0) {
+                    document.getElementById('timeError').textContent = 'Please select at least one time slot';
+                    document.getElementById('timeError').style.display = 'block';
+                    isValid = false;
+                }
+                
+                if (isValid) {
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Processing...';
+                    
+                    // Submit form after validation
+                    setTimeout(() => {
+                        form.submit();
+                    }, 500);
+                }
+            });
+        }
     </script>
 </body>
-
 </html>
