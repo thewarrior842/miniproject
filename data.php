@@ -60,10 +60,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             ];
         }
         
-        // Check for existing bookings to prevent conflicts
+        // Check for existing book to prevent conflicts
         $conflicts = [];
         foreach ($timeSlots as $slot) {
-            $stmt = $conn->prepare("SELECT id FROM bookings WHERE date = ? AND time_slot = ?");
+            $stmt = $conn->prepare("SELECT id FROM book WHERE date = ? AND time_slot = ?");
             $stmt->bind_param("ss", $date, $slot);
             $stmt->execute();
             $stmt->store_result();
@@ -78,10 +78,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             throw new Exception("The following time slots are already booked: " . implode(", ", $conflicts));
         }
         
-        // Insert bookings into database
+        // Insert book into database
         $successCount = 0;
         foreach ($timeSlots as $slot) {
-            $stmt = $conn->prepare("INSERT INTO bookings (name, email, date, time_slot, booking_type) VALUES (?, ?, ?, ?, ?)");
+            $stmt = $conn->prepare("INSERT INTO book (name, email, date, time_slot, booking_type) VALUES (?, ?, ?, ?, ?)");
             $stmt->bind_param("sssss", $name, $email, $date, $slot, $bookingType);
             
             if ($stmt->execute()) {
@@ -149,6 +149,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </div>
                 <p>You have successfully booked ' . $successCount . ' time slot(s).</p>
                 <a href="main.html" class="back-btn">Make Another Booking</a>
+                <a href="home.html" class="back-btn">Back to Home</a>
             </div>
         </body>
         </html>';
