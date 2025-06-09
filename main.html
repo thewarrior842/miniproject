@@ -212,151 +212,156 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            toggleTimeSelection();
-            setupFormValidation();
+    document.addEventListener('DOMContentLoaded', function() {
+        toggleTimeSelection();
+        setupFormValidation();
+        
+        // Add event listeners for checkboxes to update selected times when changed
+        document.querySelectorAll('.multi-slot').forEach(checkbox => {
+            checkbox.addEventListener('change', updateSelectedTimes);
         });
+    });
 
-        function toggleTimeSelection() {
-            const bookingType = document.querySelector('input[name="booking_type"]:checked').value;
-            const radioSlots = document.querySelectorAll('input[name="time_slot"]');
-            const checkboxes = document.querySelectorAll('.multi-slot');
-            const selectedTimesDiv = document.getElementById('selectedTimes');
-            
-            if (bookingType === 'single') {
-                radioSlots.forEach(radio => {
-                    radio.style.display = 'inline-block';
-                    radio.checked = false;
-                });
-                checkboxes.forEach(cb => {
-                    cb.style.display = 'none';
-                    cb.checked = false;
-                });
-                selectedTimesDiv.style.display = 'none';
-            } 
-            else if (bookingType === 'multiple') {
-                radioSlots.forEach(radio => {
-                    radio.style.display = 'none';
-                    radio.checked = false;
-                });
-                checkboxes.forEach(cb => {
-                    cb.style.display = 'inline-block';
-                    cb.checked = false;
-                });
-                selectedTimesDiv.style.display = 'block';
-                updateSelectedTimes();
-            } 
-            else if (bookingType === 'all') {
-                radioSlots.forEach(radio => {
-                    radio.style.display = 'none';
-                    radio.checked = false;
-                });
-                checkboxes.forEach(cb => {
-                    cb.style.display = 'none';
-                    cb.checked = true;
-                });
-                selectedTimesDiv.style.display = 'block';
-                updateSelectedTimes();
-            }
-        }
-
-        function updateSelectedTimes() {
-            const bookingType = document.querySelector('input[name="booking_type"]:checked').value;
-            const checkboxes = document.querySelectorAll('.multi-slot:checked');
-            const selectedTimesDiv = document.getElementById('selectedTimes');
-            
-            if (bookingType === 'all') {
-                selectedTimesDiv.innerHTML = `
-                    <strong>All Time Slots Selected:</strong>
-                    <ul>
-                        <li>9:20 AM to 10:15 AM</li>
-                        <li>10:15 AM to 11:10 AM</li>
-                        <li>11:20 AM to 12:15 PM</li>
-                        <li>1:10 PM to 2:05 PM</li>
-                        <li>2:05 PM to 3:00 PM</li>
-                        <li>3:05 PM to 4:00 PM</li>
-                    </ul>
-                `;
-            } else if (checkboxes.length > 0) {
-                let html = '<strong>Selected Time Slots:</strong><ul>';
-                checkboxes.forEach(cb => {
-                    html += <li>${cb.value}</li>;
-                });
-                html += '</ul>';
-                selectedTimesDiv.innerHTML = html;
-            } else {
-                selectedTimesDiv.innerHTML = '<em>No time slots selected</em>';
-            }
-        }
-
-        function setupFormValidation() {
-            const form = document.getElementById('bookingForm');
-            const submitBtn = document.getElementById('submitBtn');
-            
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                let isValid = true;
-                
-                // Clear previous errors
-                document.querySelectorAll('.error-message').forEach(el => {
-                    el.style.display = 'none';
-                });
-                
-                // Validate name
-                const name = document.getElementById('name').value.trim();
-                if (name === '') {
-                    document.getElementById('nameError').textContent = 'Please enter your name';
-                    document.getElementById('nameError').style.display = 'block';
-                    isValid = false;
-                }
-                
-                // Validate email
-                const email = document.getElementById('email').value.trim();
-                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-                if (email === '') {
-                    document.getElementById('emailError').textContent = 'Please enter your email';
-                    document.getElementById('emailError').style.display = 'block';
-                    isValid = false;
-                } else if (!emailRegex.test(email)) {
-                    document.getElementById('emailError').textContent = 'Please enter a valid email address';
-                    document.getElementById('emailError').style.display = 'block';
-                    isValid = false;
-                }
-                
-                // Validate date
-                const date = document.getElementById('date').value;
-                const today = new Date().toISOString().split('T')[0];
-                if (date === '') {
-                    document.getElementById('dateError').textContent = 'Please select a date';
-                    document.getElementById('dateError').style.display = 'block';
-                    isValid = false;
-                } else if (date < today) {
-                    document.getElementById('dateError').textContent = 'Please select a future date';
-                    document.getElementById('dateError').style.display = 'block';
-                    isValid = false;
-                }
-                
-                // Validate time slots
-                const bookingType = document.querySelector('input[name="booking_type"]:checked').value;
-                const selectedSlots = document.querySelectorAll('.multi-slot:checked').length;
-                
-                if (bookingType === 'multiple' && selectedSlots === 0) {
-                    document.getElementById('timeError').textContent = 'Please select at least one time slot';
-                    document.getElementById('timeError').style.display = 'block';
-                    isValid = false;
-                }
-                
-                if (isValid) {
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = 'Processing...';
-                    
-                    // Submit form after validation
-                    setTimeout(() => {
-                        form.submit();
-                    }, 500);
-                }
+    function toggleTimeSelection() {
+        const bookingType = document.querySelector('input[name="booking_type"]:checked').value;
+        const radioSlots = document.querySelectorAll('input[name="time_slot"]');
+        const checkboxes = document.querySelectorAll('.multi-slot');
+        const selectedTimesDiv = document.getElementById('selectedTimes');
+        
+        if (bookingType === 'single') {
+            radioSlots.forEach(radio => {
+                radio.style.display = 'inline-block';
+                radio.checked = false;
             });
+            checkboxes.forEach(cb => {
+                cb.style.display = 'none';
+                cb.checked = false;
+            });
+            selectedTimesDiv.style.display = 'none';
+        } 
+        else if (bookingType === 'multiple') {
+            radioSlots.forEach(radio => {
+                radio.style.display = 'none';
+                radio.checked = false;
+            });
+            checkboxes.forEach(cb => {
+                cb.style.display = 'inline-block';
+                cb.checked = false;
+            });
+            selectedTimesDiv.style.display = 'block';
+            updateSelectedTimes();
+        } 
+        else if (bookingType === 'all') {
+            radioSlots.forEach(radio => {
+                radio.style.display = 'none';
+                radio.checked = false;
+            });
+            checkboxes.forEach(cb => {
+                cb.style.display = 'none';
+                cb.checked = true;
+            });
+            selectedTimesDiv.style.display = 'block';
+            updateSelectedTimes();
         }
-    </script>
+    }
+
+    function updateSelectedTimes() {
+        const bookingType = document.querySelector('input[name="booking_type"]:checked').value;
+        const checkboxes = document.querySelectorAll('.multi-slot:checked');
+        const selectedTimesDiv = document.getElementById('selectedTimes');
+        
+        if (bookingType === 'all') {
+            selectedTimesDiv.innerHTML = `
+                <strong>All Time Slots Selected: </strong>
+                <ul>
+                    <li>9:20 AM to 10:15 AM</li>
+                    <li>10:15 AM to 11:10 AM</li>
+                    <li>11:20 AM to 12:15 PM</li>
+                    <li>1:10 PM to 2:05 PM</li>
+                    <li>2:05 PM to 3:00 PM</li>
+                    <li>3:05 PM to 4:00 PM</li>
+                </ul>
+            `;
+        } else if (checkboxes.length > 0) {
+            let html = '<strong>Selected Time Slots:</strong><ul>';
+            checkboxes.forEach(cb => {
+                html += `<li>${cb.value}</li>`;
+            });
+            html += '</ul>';
+            selectedTimesDiv.innerHTML = html;
+        } else {
+            selectedTimesDiv.innerHTML = '<em>No time slots selected</em>';
+        }
+    }
+
+    function setupFormValidation() {
+        const form = document.getElementById('bookingForm');
+        const submitBtn = document.getElementById('submitBtn');
+        
+        form.addEventListener('submit', function(e) {
+            e.preventDefault();
+            let isValid = true;
+            
+            // Clear previous errors
+            document.querySelectorAll('.error-message').forEach(el => {
+                el.style.display = 'none';
+            });
+            
+            // Validate name
+            const name = document.getElementById('name').value.trim();
+            if (name === '') {
+                document.getElementById('nameError').textContent = 'Please enter your name';
+                document.getElementById('nameError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate email
+            const email = document.getElementById('email').value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (email === '') {
+                document.getElementById('emailError').textContent = 'Please enter your email';
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            } else if (!emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = 'Please enter a valid email address';
+                document.getElementById('emailError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate date
+            const date = document.getElementById('date').value;
+            const today = new Date().toISOString().split('T')[0];
+            if (date === '') {
+                document.getElementById('dateError').textContent = 'Please select a date';
+                document.getElementById('dateError').style.display = 'block';
+                isValid = false;
+            } else if (date < today) {
+                document.getElementById('dateError').textContent = 'Please select a future date';
+                document.getElementById('dateError').style.display = 'block';
+                isValid = false;
+            }
+            
+            // Validate time slots
+            const bookingType = document.querySelector('input[name="booking_type"]:checked').value;
+            const selectedSlots = document.querySelectorAll('.multi-slot:checked').length;
+            
+            if (bookingType === 'multiple' && selectedSlots === 0) {
+                document.getElementById('timeError').textContent = 'Please select at least one time slot';
+                document.getElementById('timeError').style.display = 'block';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                submitBtn.disabled = true;
+                submitBtn.textContent = 'Processing...';
+                
+                // Submit form after validation
+                setTimeout(() => {
+                    form.submit();
+                }, 500);
+            }
+        });
+    }
+</script>
 </body>
 </html>
