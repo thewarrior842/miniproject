@@ -13,7 +13,7 @@ if ($conn->connect_error) {
 }
 
 // Query all bookings
-$sql = "SELECT name, email, date, time  FROM bookings ";
+$sql = "SELECT name, email, date, time_slot, booking_type, created_at FROM book";
 $result = $conn->query($sql);
 ?>
 
@@ -75,13 +75,17 @@ $result = $conn->query($sql);
                 <th>Email</th>
                 <th>Booking Date</th>
                 <th>Booking Time</th>
+                <th>Booking Type</th>
+                <th>Created At</th>
             </tr>
             <?php while ($row = $result->fetch_assoc()): ?>
                 <tr>
                     <td><?= htmlspecialchars($row['name']) ?></td>
                     <td><?= htmlspecialchars($row['email']) ?></td>
                     <td><?= htmlspecialchars($row['date']) ?></td>
-                    <td><?= htmlspecialchars($row['time']) ?></td>
+                    <td><?= htmlspecialchars($row['time_slot']) ?></td>
+                    <td><?= htmlspecialchars($row['booking_type']) ?></td>
+                    <td><?= htmlspecialchars($row['created_at']) ?></td>
                 </tr>
             <?php endwhile; ?>
         </table>
